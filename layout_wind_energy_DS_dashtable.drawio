@@ -1,0 +1,31 @@
+<mxfile host="65bd71144e">
+    <diagram id="Xz5ZPb2MMaV6Nkn-Xl0E" name="Page-1">
+        <mxGraphModel dx="792" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="1390" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="overview: show some overview stas" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="150" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="title, header" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="80" width="470" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="descriptive analysis: mean..." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="150" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="300" width="470" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="interactive panel: button, drop list" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="317.5" width="120" height="135" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="1.&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px;&quot;&gt;Time series analysis&lt;br&gt;2.&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px;&quot;&gt;Cluster analysis&lt;br&gt;3.&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px;&quot;&gt;Geographic analysis&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="315" width="270" height="135" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="footer: links" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="480" width="470" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
