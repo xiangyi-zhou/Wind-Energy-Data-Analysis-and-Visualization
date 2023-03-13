@@ -40,15 +40,7 @@ app = dash.Dash(__name__)
 
 # Define the layout of the app
 app.layout = html.Div(children=[
-    html.H1(children='Monthly Total Electrical Capacity'),
-
-    dcc.Slider(
-        id='year-slider',
-        min=earliest_year,
-        max=latest_year,
-        step=1,
-        value=latest_year
-    ),
+    html.H1(children='Wind Energy Data Analysis (European Union)'),
 
     dcc.Graph(
         id='monthly-plot',
@@ -57,10 +49,20 @@ app.layout = html.Div(children=[
                 {'x': df.index, 'y': df['electrical_capacity'], 'type': 'line', 'name': 'Electrical Capacity'},
             ],
             'layout': {
-                'title': 'Monthly Total Electrical Capacity'
+                'title': 'Monthly Total Electrical Capacity (EU)'
             }
         }
-    )
+    ),
+        dcc.RangeSlider(
+        id='year-slider',
+        min=earliest_year,
+        max=latest_year,
+        step=1,
+        value=[latest_year - 4, latest_year],
+        marks={
+            str(year): str(year) for year in range(earliest_year, latest_year+1, 5)
+        }
+    ),
 ])
 
 # Define the callback function to update the plot
@@ -68,9 +70,9 @@ app.layout = html.Div(children=[
     Output(component_id='monthly-plot', component_property='figure'),
     [Input(component_id='year-slider', component_property='value')]
 )
-def update_figure(year):
-    # Filter the data by year
-    filtered_df = df[df.index.year == year]
+def update_figure(year_range):
+    # Filter the data by year range
+    filtered_df = df[(df.index.year >= year_range[0]) & (df.index.year <= year_range[1])]
 
     # Resample the data to monthly frequency
     monthly_df = filtered_df.resample('M').sum()
@@ -81,7 +83,8 @@ def update_figure(year):
             {'x': monthly_df.index, 'y': monthly_df['electrical_capacity'], 'type': 'line', 'name': 'Electrical Capacity'},
         ],
         'layout': {
-            'title': f'Monthly Total Electrical Capacity ({year})'
+            'title': f'Monthly Total Electrical Capacity (EU) {year_range[0]} - {year_range[1]}',
+            'yaxis': {'title': 'Installed Electrical Capacity (MW)'}
         }
     }
 
