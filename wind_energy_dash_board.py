@@ -71,7 +71,7 @@ def pie_chart_draw(dataframe):
     
     # Create the pie chart
     fig = px.pie(dataframe, values='percentage', names='country', title='Percentage of Total Capacity by Country')
-    fig.update_traces(marker=dict(colors=['#1f77b4', '#2196f3', '#42a5f5', '#64b5f6', '#90caf9', '#bbdefb']))
+    fig.update_traces(marker=dict(colors=['#94DAFF', '#99D0E0', '#B1D0E0', '#64b5f6', '#93B5C6', '#A2DBFA','#A2DBFA', '#9ACEFF']))
 
 
     return fig
