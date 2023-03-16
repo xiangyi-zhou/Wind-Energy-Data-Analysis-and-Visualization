@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 
 # Define the connection string
 user = 'postgres'
-password = 'postgresql2023'
+password = 'YOURPASSWORD'
 host = 'localhost'
 port = '5432'
 database = 'wind_energy_database'
