@@ -151,7 +151,7 @@ app = dash.Dash(__name__)
 # Define the layout of the app
 app.layout = html.Div([    
     html.H1('Wind Energy Dashboard (European Union)', 
-        style={'color': 'dark bule', 'font-family': 'Arial'}),   
+        style={'color': 'black', 'font-family': 'Arial'}),   
     chart_div1,    
     chart_div2,    
     chart_div3
