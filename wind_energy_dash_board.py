@@ -17,6 +17,7 @@ connection_string = f'postgresql://{user}:{password}@{host}:{port}/{database}'
 # Create a connection to the database
 engine = create_engine(connection_string)
 
+
 country_map = {
     'CZ': 'Czechia',
     'DK': 'Denmark',
@@ -70,62 +71,86 @@ def pie_chart_draw(dataframe):
     
     # Create the pie chart
     fig = px.pie(dataframe, values='percentage', names='country', title='Percentage of Total Capacity by Country')
+    fig.update_traces(marker=dict(colors=['#1f77b4', '#2196f3', '#42a5f5', '#64b5f6', '#90caf9', '#bbdefb']))
+
 
     return fig
+
+# Style the first chart div
+chart_div_style = {
+    'display': 'inline-block',
+    'vertical-align': 'top',
+    'width': '40%',
+    'border-left': '1px solid #C8D4E3',
+    'border-right': '1px solid #C8D4E3',
+    'border-top': '1px solid #C8D4E3',
+    'border-bottom': '1px solid #C8D4E3',
+}
+
+chart_div1 = html.Div(children=[
+    dcc.Graph(
+        id='pie-chart',
+        figure=pie_chart_draw(pie_chart_get_data())
+    ),
+
+], style=chart_div_style)
+
+
+# Style the second chart div
+chart_div2 = html.Div(children=[
+    html.Label('Select a country'),
+    dcc.Dropdown(
+        id='country-dropdown',
+        options=[{'label': value, 'value': key} for key, value in country_map.items()],
+        value='UK'
+    ),
+    dcc.Graph(id='wind-energy-bar-chart')
+], style=chart_div_style)
+
+# Style the third chart div
+chart_div3 = html.Div(children=[
+    dcc.Graph(
+        id='monthly-plot',
+        figure={
+            'data': [
+                {'x': df.index, 'y': df['electrical_capacity'], 'type': 'line', 'name': 'Electrical Capacity'},
+            ],
+            'layout': {
+                'title': 'Monthly Total Electrical Capacity (EU)'
+            }
+        }
+    ),
+    dcc.RangeSlider(
+        id='year-slider',
+        min=earliest_year,
+        max=latest_year,
+        step=1,
+        value=[latest_year - 4, latest_year],
+        marks={
+            str(year): str(year) for year in range(earliest_year, latest_year+1, 5)
+        }
+    ),
+    
+], style={
+    'display': 'inline-block',
+    'width': '80%',
+    'border-left': '1px solid #C8D4E3',
+    'border-right': '1px solid #C8D4E3',
+    'border-top': '1px solid #C8D4E3',
+    'border-bottom': '1px solid #C8D4E3'
+})
+
 
 # Define the Dash app and layout
 app = dash.Dash(__name__)
 
+# Define the layout of the app
 app.layout = html.Div([
+    html.H1('Wind Energy Dashboard (European Union)'),
+    chart_div1, chart_div2,
+    chart_div3
     
-    html.Div(children=[
-            
-        html.H2(children='Wind Energy Installations in the EU'),
-
-        dcc.Graph(
-            id='pie-chart',
-            figure=pie_chart_draw(pie_chart_get_data())
-        ),
-        
-    ], style={'display': 'inline-block', 'width':'40%'}),  # add a comma here
-
-    html.Div(children=[
-        html.Label('Select a country'),
-        dcc.Dropdown(
-            id='country-dropdown',
-            options=[{'label': value, 'value': key} for key, value in country_map.items()],
-            value='CZ'
-        ),
-        dcc.Graph(id='wind-energy-bar-chart')
-    ], style={'display': 'inline-block', 'width': '40%'}),
-    
-    html.Div(children=[
-        html.H2(children='Wind Energy Data Analysis (European Union)'),
-        dcc.Graph(
-            id='monthly-plot',
-            figure={
-                'data': [
-                    {'x': df.index, 'y': df['electrical_capacity'], 'type': 'line', 'name': 'Electrical Capacity'},
-                ],
-                'layout': {
-                    'title': 'Monthly Total Electrical Capacity (EU)'
-                }
-            }
-        ),
-        dcc.RangeSlider(
-            id='year-slider',
-            min=earliest_year,
-            max=latest_year,
-            step=1,
-            value=[latest_year - 4, latest_year],
-            marks={
-                str(year): str(year) for year in range(earliest_year, latest_year+1, 5)
-            }
-        ),
-        
-    ], style={'display': 'inline-block', 'width': '80%'})
-])
-
+], style={'text-align': 'center'})
 
 # Define the callback function to update the bar chart based on the selected country    
 @app.callback(
@@ -133,11 +158,24 @@ app.layout = html.Div([
     Input('country-dropdown', 'value')
 )
 def update_bar_chart(country):
+    
     # Query the database for the data
     query = f"SELECT electrical_capacity, nuts_2_region FROM mytable WHERE country='{country}'"
     df = pd.read_sql_query(query, engine)
-    fig = px.bar(df, x='nuts_2_region', y='electrical_capacity')
-    fig.update_layout(title=f'Wind Energy Capacity in {country_map[country]}')
+    
+    # Sort the dataframe by nuts_2_region
+    df = df.sort_values(by='nuts_2_region')
+    # Get the order of nuts_2_region for the current country
+    fig = {
+            'data': [
+                {'x': df['nuts_2_region'], 'y': df['electrical_capacity'], 'type': 'bar'},
+            ],
+            'layout': {
+                'title': f'Overrall Wind Energy Capacity in {country_map[country]}',
+                'yaxis': {'title': 'Installed Electrical Capacity (MW)'},
+                'xaxis': {'title': 'The code of the NUTS 2 region', 'categoryorder': 'array', 'categoryarray': df['nuts_2_region']},
+            }
+        }
     return fig
 
 # Define the callback function to update the monthly plot based on the selected year range
@@ -158,7 +196,7 @@ def update_figure(year_range):
             {'x': monthly_df.index, 'y': monthly_df['electrical_capacity'], 'type': 'line', 'name': 'Electrical Capacity'},
         ],
         'layout': {
-            'title': f'Monthly Total Electrical Capacity (EU) {year_range[0]} - {year_range[1]}',
+            'title': f'Monthly Total Electrical Capacity {year_range[0]} - {year_range[1]}',
             'yaxis': {'title': 'Installed Electrical Capacity (MW)'}
         }
     }
@@ -168,3 +206,7 @@ def update_figure(year_range):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+    
+    
+    
+    
