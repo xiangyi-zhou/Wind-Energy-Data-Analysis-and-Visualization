@@ -8,6 +8,8 @@ This is a dashboard that displays wind energy data for the European Union. The d
 
 The pie chart and the bar chart have dropdown menus for country selection. The line chart has a slider for selecting a year range.
 
+![Screenshot](Screenshot.jpeg)
+
 ### Technologies Used
 
 The following technologies were used to build this dashboard:
@@ -16,6 +18,11 @@ The following technologies were used to build this dashboard:
 - Plotly
 - Pandas
 - SQLAlchemy
+
+
+### Data Source:
+
+https://data.open-power-system-data.org/renewable_power_plants/2020-08-25
 
 ### Running the Dashboard
 
@@ -28,3 +35,8 @@ After installing the dependencies, run the following command to start the dashbo
 > python app.py
 
 This will start a local server on your machine. You can view the dashboard by navigating to `http://localhost:8050` in your web browser.
+
+### Reference
+https://github.com/microsoft/ML-For-Beginners
+
+https://github.com/microsoft/Data-Science-For-Beginners
