@@ -80,11 +80,12 @@ def pie_chart_draw(dataframe):
 chart_div_style = {
     'display': 'inline-block',
     'vertical-align': 'top',
-    'width': '40%',
-    'border-left': '1px solid #C8D4E3',
-    'border-right': '1px solid #C8D4E3',
-    'border-top': '1px solid #C8D4E3',
-    'border-bottom': '1px solid #C8D4E3',
+    'width': '35%',
+    'height': '500px',
+    'margin': '1%',
+    'border': '1px solid #C8D4E3',
+    'box-shadow': '2px 2px 2px lightgrey',
+    'padding': '20px',
 }
 
 chart_div1 = html.Div(children=[
@@ -133,11 +134,14 @@ chart_div3 = html.Div(children=[
     
 ], style={
     'display': 'inline-block',
-    'width': '80%',
+    'width': '75%',
+    'margin': '1%',
     'border-left': '1px solid #C8D4E3',
     'border-right': '1px solid #C8D4E3',
     'border-top': '1px solid #C8D4E3',
-    'border-bottom': '1px solid #C8D4E3'
+    'border-bottom': '1px solid #C8D4E3',
+    'box-shadow': '2px 2px 2px lightgrey',
+    'padding': '10px'
 })
 
 
@@ -145,12 +149,14 @@ chart_div3 = html.Div(children=[
 app = dash.Dash(__name__)
 
 # Define the layout of the app
-app.layout = html.Div([
-    html.H1('Wind Energy Dashboard (European Union)'),
-    chart_div1, chart_div2,
+app.layout = html.Div([    
+    html.H1('Wind Energy Dashboard (European Union)', 
+        style={'color': 'dark bule', 'font-family': 'Arial'}),   
+    chart_div1,    
+    chart_div2,    
     chart_div3
-    
 ], style={'text-align': 'center'})
+
 
 # Define the callback function to update the bar chart based on the selected country    
 @app.callback(
