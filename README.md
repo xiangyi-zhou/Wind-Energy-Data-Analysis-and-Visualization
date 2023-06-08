@@ -53,8 +53,7 @@ To get started with this project, follow these steps:
 6. Open your web browser and navigate to `http://localhost:8050` to view the dashboard.
 
 Note: 
-1. If you exported the cleaned data to a CSV file, you will need to modify the `wind_energy_dashboard.py` file to load the data from the CSV file instead of a PostgreSQL database.
-2. Please note that this is not a final version and may be subject to further refinements. If you encounter any issues or have suggestions for future improvements, feel free to contact me zxyzhouxiangyi@gmail.com
+If you exported the cleaned data to a CSV file, you will need to modify the `wind_energy_dashboard.py` file to load the data from the CSV file instead of a PostgreSQL database.
 
 ## Reference
 https://github.com/microsoft/ML-For-Beginners
