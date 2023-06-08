@@ -59,6 +59,3 @@ If you exported the cleaned data to a CSV file, you will need to modify the `win
 https://github.com/microsoft/ML-For-Beginners
 
 https://github.com/microsoft/Data-Science-For-Beginners
-
-## License
-This project is licensed under the MIT License
